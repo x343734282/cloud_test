@@ -7,11 +7,26 @@
 
 const http = require('http');
 
+var httpProxy = require('http-proxy');
+var proxy = httpProxy.createProxyServer();
+
+const url = require('url');
+
 const server = http.createServer((req, res) => {
-	res.write('hello word');
-	res.end();
+	console.log('url:' + req.url);
+	proxy.web(req, res, {
+		target: url.parse(req.url)
+	});
 });
+
 server.on('clientError', (err, socket) => {
 	socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
 });
-server.listen(80);
+
+proxy.on('error', function(e) {
+	console.log('error:' + JSON.stringify(e));
+});
+
+server.listen(process.env.PORT || 7080, function() {
+	console.log('listening on 7080');
+});
