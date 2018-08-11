@@ -22,11 +22,4 @@ const server = http.createServer((req, res) => {
 server.on('clientError', (err, socket) => {
 	socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
 });
-
-proxy.on('error', function(e) {
-	console.log('error:' + JSON.stringify(e));
-});
-
-server.listen(process.env.PORT || 7080, function() {
-	console.log('listening on 7080');
-});
+server.listen(process.env.PORT||8080);
