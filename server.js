@@ -38,7 +38,7 @@ const server = http.createServer(function(req, res) {
 });
 
 proxy.on('error', function(e) {
-	console.log(JSON.stringify('proxy error: ' + e));
+	console.log('proxy error: ' + JSON.stringify(e));
 });
 
 server.on('clientError', (err, socket) => {
